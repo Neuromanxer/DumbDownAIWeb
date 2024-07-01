@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DumbedDownAI</title>
+    <link rel="stylesheet" href="styles_css.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="DumbedDownAI Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">DumbedDownAI</a></li>
+                <li><a href="#">AI Detector</a></li>
+                <li><a href="#">Generator</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>DumbedDownAI</h1>
+            <p>Do you wish you could help contribute to a complex project, but you don't understand the code? Tired of tutors and teachers going around the point of the concept? DumbedDownAI breaks down complex concepts and code into their simplest forms, making them easy to understand. </p>
+        </section>
+        <section class="editor">
+            <h2>Enter the concept you want simplified:</h2>
+            <textarea id="input-concept" placeholder="Enter a concept"></textarea>
+            <button id="simplify-btn">Simplify</button>
+            <div id="simplified-response"></div>
+        </section>
+        <section class="support">
+            <ul>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Plans & Pricing</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+            <div class="user-profile">
+                <span>EH</span>
+                <a href="#" class="email">[ethanhong110@gmail.com](mailto:ethanhong110@gmail.com)</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const simplifyBtn = document.getElementById('simplify-btn');
+        const inputConcept = document.getElementById('input-concept');
+        const simplifiedResponse = document.getElementById('simplified-response');
+
+        simplifyBtn.addEventListener('click', async () => {
+            const concept = inputConcept.value.trim();
+            if (!concept) {
+                alert('Please enter a concept');
+                return;
+            }
+
+            try {
+                const response = await fetch('/simplify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ concept })
+                });
+
+                const data = await response.json();
+                simplifiedResponse.innerText = data.response;
+            } catch (error) {
+                console.error(error);
+                alert('Error simplifying concept');
+            }
+        });
+    </script>
+</body>
+</html>
